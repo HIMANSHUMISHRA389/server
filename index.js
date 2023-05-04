@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const cors=require('cors');
+const cors = require("cors");
 
 //all middlewares
 app.use(express.json());
@@ -10,27 +10,20 @@ app.use(cors());
 //database connecting
 const connectionString =
   "mongodb+srv://himanshu:himanshu@astro.rmlxmo4.mongodb.net/?retryWrites=true&w=majority";
-const compass = "mongodb://localhost:27017";
-const connectDB=async()=>{
-  mongoose
-    .connect(connectionString, {
+const compass = "mongodb://0.0.0.0:27017";
+const connectDB = async () => {
+  try {
+    mongoose.connect(compass, {
       useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-    .then(() => {
-      console.log("mongoose connected");
-    })
-    .catch((e) => {
-      console.log(e);
     });
-}
+    console.log("mongoose connected");
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const schema = mongoose.Schema({
-  FirstName: {
-    type: String,
-    required: true,
-  },
-  LastName: {
+  name: {
     type: String,
     required: true,
   },
@@ -38,16 +31,11 @@ const schema = mongoose.Schema({
     type: String,
     required: true,
   },
-  age: {
+  dob: {
     type: Number,
-    required: true,
   },
-  Address: {
-    type: String,
-  },
-  check: {
-    type: Boolean,
-    required: true,
+  mob: {
+    type: Number,
   },
   created: {
     type: Date,
@@ -58,31 +46,30 @@ const User = mongoose.model("User", schema);
 
 //get all users
 
-app.get('/',(req,res)=>{
-  res.send('working fine dont worry')
+app.get("/submitted", (req, res) => {
+  res.send("<h1>Your information has been saved </h1>");
 });
 //create a new User
 app.post("/", (req, res) => {
+  const{name,email,age,mob}=req.body;
   try {
     User.create({
-      FirstName: req.body.FirstName,
-      LastName: req.body.LastName,
-      email: req.body.email,
-      age: req.body.age,
-      Address: req.body.Address,
-      check: req.body.check,
+      name,
+      email,
+      age,
+      mob,
     });
-    res.send("created");
-    console.log("done");
+    console.log(name,email,age,mob);
+    
+    
   } catch (error) {
     res.send("something went wrong");
     console.log(error);
   }
 });
 
-
-connectDB().then(()=>{
-  app.listen(3000, (req, res) => {
+connectDB().then(() => {
+  app.listen(3000, () => {
     console.log("Server started at port 3000...");
   });
-})
+});
