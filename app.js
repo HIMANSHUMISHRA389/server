@@ -55,7 +55,7 @@ const User = mongoose.model("User", schema);
 //get all users
 
 app.get('/',(req,res)=>{
-  res.send('working fine')
+  res.send('working fine dont worry')
 });
 //create a new User
 app.post("/", (req, res) => {
