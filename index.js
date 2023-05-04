@@ -11,17 +11,19 @@ app.use(cors());
 const connectionString =
   "mongodb+srv://himanshu:himanshu@astro.rmlxmo4.mongodb.net/?retryWrites=true&w=majority";
 const compass = "mongodb://localhost:27017";
-mongoose
-  .connect(connectionString, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("mongoose connected");
-  })
-  .catch((e) => {
-    console.log(e);
-  });
+const connectDB=()=>{
+  mongoose
+    .connect(connectionString, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    .then(() => {
+      console.log("mongoose connected");
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
 
 const schema = mongoose.Schema({
   FirstName: {
@@ -79,6 +81,8 @@ app.post("/", (req, res) => {
 });
 
 
-app.listen(3000, (req, res) => {
-  console.log("Server started at port 3000...");
-});
+connectDB().then(()=>{
+  app.listen(3000, (req, res) => {
+    console.log("Server started at port 3000...");
+  });
+})
