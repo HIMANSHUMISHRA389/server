@@ -1,9 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+const cors=require('cors');
 
 //all middlewares
 app.use(express.json());
+app.use(cors());
 
 //database connecting
 const connectionString =
