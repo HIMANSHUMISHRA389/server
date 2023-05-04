@@ -11,7 +11,7 @@ app.use(cors());
 const connectionString =
   "mongodb+srv://himanshu:himanshu@astro.rmlxmo4.mongodb.net/?retryWrites=true&w=majority";
 const compass = "mongodb://localhost:27017";
-const connectDB=()=>{
+const connectDB=async()=>{
   mongoose
     .connect(connectionString, {
       useNewUrlParser: true,
