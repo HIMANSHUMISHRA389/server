@@ -53,10 +53,10 @@ const schema = mongoose.Schema({
 const User = mongoose.model("User", schema);
 
 //get all users
-// app.get("/", (req, res) => {
-//   res.send("Hello I am fine!");
-// }
 
+app.get('/',(req,res)=>{
+  res.send('working fine')
+});
 //create a new User
 app.post("/", (req, res) => {
   try {
